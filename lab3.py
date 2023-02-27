@@ -115,19 +115,13 @@ def checkPointOnTheLine(p1, p2, p3):
     return {'title': 'Правее', 'flag': False}
 
 def generateSimplePolyPoints(n, pointsConvex):
-    points = [Point(random.random() * 8 + 1, random.random() * 8 + 1) for p in range(0, n)]
+    points = [Point(random.random() * 8, random.random() * 8) for p in range(0, n)]
     while (not(checkSimpleInside(pointsConvex, points))):
-        points = [Point(random.random() * 8 + 1, random.random() * 8 + 1) for p in range(0, n)]
+        points = [Point(random.random() * 8, random.random() * 8) for p in range(0, n)]
     if (isSimple(points)):
         return points
     else:
         return generateSimplePolyPoints(n, pointsConvex)
-
-def generateConvexPolyPoints(n):
-    points = [Point(random.random() * 5, random.random() * 5) for p in range(0, n)]
-    while (not isConvex(points)):
-        points = [Point(random.random() * 5, random.random() * 5) for p in range(0, n)]
-    return points
 
 def generatePoints(n, pointsConvex, simplePoints):
     points = [Point(random.random() * 8, random.random() * 8) for p in range(0, n)]
@@ -187,8 +181,7 @@ def angleOctanTest(point, points):
         return False
 
 def main(n):
-    pointsConvex = [Point(1, 1), Point(4, 6), Point(7, 6), Point(7, 3), Point(5, 1), Point(2, 1)]
-    #pointsConvex = generateConvexPolyPoints(n)
+    pointsConvex = [Point(1, 1), Point(4, 6), Point(7, 6), Point(7, 3), Point(5, 1)]
     points_2d_convex = [[point.x, point.y] for point in pointsConvex]
     convexPoly = Polygon(points_2d_convex, facecolor='none', edgecolor='blue')
 
@@ -196,15 +189,13 @@ def main(n):
     points_2d = [[point.x, point.y] for point in points]
     simplePoly = Polygon(points_2d, facecolor='none', edgecolor='black')
 
-    pointsSet = generatePoints(n * 2, pointsConvex, points)
+    pointsSet = generatePoints(n, pointsConvex, points)
 
     fig, ax = plt.subplots(1, 1)
     ax.add_patch(convexPoly)
     ax.add_patch(simplePoly)
-    # for index, item in enumerate(pointsConvex):
-    #     plt.scatter(item.x, item.y, c="red", marker='o')
-    # for index, item in enumerate(points):
-    #     plt.scatter(item.x, item.y, c="red", marker='o')
+    for index, item in enumerate(pointsConvex):
+        plt.scatter(item.x, item.y, c="blue", marker='o')
     for index, item in enumerate(pointsSet):
         plt.scatter(item.x, item.y, c="green", marker='o')
 
