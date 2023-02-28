@@ -17,22 +17,22 @@ class Point:
 
 # вектор отражения        
 def getReflectedVector(a: Point, p1: Point, p2: Point):
-        b = Point(p2.x - p1.x, p2.y - p1.y)
-        result = b
-        product = ((a * b) / (b * b)) * 2
-        result.x *= product
-        result.y *= product
-        return result - a
+    b = Point(p2.x - p1.x, p2.y - p1.y)
+    result = b
+    product = ((a * b) / (b * b)) * 2
+    result.x *= product
+    result.y *= product
+    return result - a
 
 # список случайных векторов
 def getListOfVectors(length):
-        vectors = []
-        for i in range(length):
+    vectors = []
+    for i in range(length):
+        p = Point(random.randint(-1, 1), random.randint(-1, 1))
+        while p.x == 0 and p.y == 0:
             p = Point(random.randint(-1, 1), random.randint(-1, 1))
-            while p.x == 0 and p.y == 0:
-                p = Point(random.randint(-1, 1), random.randint(-1, 1))
-            vectors.append(p)
-        return vectors
+        vectors.append(p)
+    return vectors
 
 # новые координаты точки после прибавления к ней вектора    
 def move(movingPoints: list, vectors: list, i):
@@ -213,11 +213,12 @@ def main(n):
     points_2d_convex = [[point.x, point.y] for point in pointsConvex]
     convexPoly = Polygon(points_2d_convex, facecolor='none', edgecolor='blue')
 
-    points = generateSimplePolyPoints(n, pointsConvex)
+    #points = generateSimplePolyPoints(n, pointsConvex)
+    points = [Point()]
     points_2d = [[point.x, point.y] for point in points]
     simplePoly = Polygon(points_2d, facecolor='none', edgecolor='black')
 
-    movingPointsSet = generatePoints(n * 2, pointsConvex, points)
+    movingPointsSet = generatePoints(n, pointsConvex, points)
     
     vectors = getListOfVectors(len(movingPointsSet))
 
