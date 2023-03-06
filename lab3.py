@@ -8,6 +8,10 @@ class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+    def __add__(self, other):
+        self.x += other.x
+        self.y += other.y
+        return self
     def __mul__(self, other):
         return self.x * other.x + self.y * other.y
     def __sub__(self, other):
@@ -28,16 +32,15 @@ def getReflectedVector(a: Point, p1: Point, p2: Point):
 def getListOfVectors(length):
         vectors = []
         for i in range(length):
-            p = Point(random.randint(-1, 1), random.randint(-1, 1))
+            p = Point(random.uniform(-1, 1), random.uniform(-1, 1))
             while p.x == 0 and p.y == 0:
-                p = Point(random.randint(-1, 1), random.randint(-1, 1))
+                p = Point(random.uniform(-1, 1), random.uniform(-1, 1))
             vectors.append(p)
         return vectors
 
 # новые координаты точки после прибавления к ней вектора    
 def move(movingPoints: list, vectors: list, i):
-    movingPoints[i].x = movingPoints[i].x + vectors[i].x
-    movingPoints[i].y = movingPoints[i].y + vectors[i].y
+    movingPoints[i] = movingPoints[i] + vectors[i]
 
 # если внутри простого многоугольника, удаляем данные о точке и векторе
 def hasTrapped(p0: Point, v0: Point, movingPoints: list, vectors: list):
@@ -208,7 +211,7 @@ def getIntersectedEdge(p1: Point, p2: Point, points):
     return []
 
 def main(n):
-    pointsConvex = [Point(1, 1), Point(4, 6), Point(7, 6), Point(7, 3), Point(5, 1), Point(2, 1)]
+    pointsConvex = [Point(2, 2), Point(3, 6), Point(5, 8), Point(7, 6), Point(8, 4), Point(6, 2)]
 
     points_2d_convex = [[point.x, point.y] for point in pointsConvex]
     convexPoly = Polygon(points_2d_convex, facecolor='none', edgecolor='blue')
@@ -241,6 +244,7 @@ def main(n):
 
             next_point = Point(movingPointsSet[i].x + vectors[i].x, movingPointsSet[i].y + vectors[i].y)
 
+            # проверка не вышел ли вектор за пределы многоугольника
             while not isPointInsideConvex(pointsConvex, next_point):
                 edges = getIntersectedEdge(movingPointsSet[i], next_point, pointsConvex)
                 if len(edges) == 0:
@@ -258,7 +262,7 @@ def main(n):
             move(movingPointsSet, vectors, i)
     
     animation = camera.animate(blit=False, interval=100)
-    animation.save("animation1.gif")
+    animation.save("animation3.gif")
     plt.show()
 
 main(5)
