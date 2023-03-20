@@ -25,16 +25,28 @@ class Vector:
     def __init__(self, p1: Point, p2: Point):
         self.x = p2.x - p1.x
         self.y = p2.y - p1.y
+        
+    def __mul__(self, other):
+        return self.x * other.x + self.y * other.y
 
     def getLength(self):
         return math.sqrt(self.x * self.x + self.y * self.y)
 
-    def __mul__(self, other):
-        return self.x * other.x + self.y * other.y
-
 def generatePoints():
     points = [Point(random.random() * 10, random.random() * 10) for p in range(0, 20)]
     return points
+
+fig, ax = plt.subplots(1, 1)
+camera = Camera(fig)
+
+def drawPoints(points):
+    for i in range(len(points)):
+        plt.scatter(points[i].x, points[i].y)
+        
+def drawHull(points):
+    for i in range(len(points) - 1):
+        plt.plot([points[i].x, points[i + 1].x], [points[i].y, points[i + 1].y])
+    camera.snap()
 
 def compare(p1, p2):
     if(p1.y < p2.y):
@@ -101,22 +113,10 @@ def buildHull(points):
     drawHull(hullPoints)
     hullPoints.pop()
     
-def drawPoints(points):
-    for i in range(len(points)):
-        plt.scatter(points[i].x, points[i].y)
-        
-fig, ax = plt.subplots(1, 1)
-camera = Camera(fig)
-        
-def drawHull(points):
-    for i in range(len(points) - 1):
-        plt.plot([points[i].x, points[i + 1].x], [points[i].y, points[i + 1].y])
-    camera.snap()
-    
 if __name__ == "__main__":
     points = sortPoints(generatePoints())
     drawPoints(points)
     buildHull(points)
     animation = camera.animate(blit=False, interval=300)
-    animation.save("animation1.gif")
+    animation.save("animation3.gif")
     plt.show()
