@@ -30,7 +30,6 @@ def getReflectedVector(a: Point, p1: Point, p2: Point):
 
 # список случайных векторов
 def getListOfVectors(length):
-<<<<<<< HEAD
         vectors = []
         for i in range(length):
             p = Point(random.uniform(-1, 1), random.uniform(-1, 1))
@@ -38,15 +37,6 @@ def getListOfVectors(length):
                 p = Point(random.uniform(-1, 1), random.uniform(-1, 1))
             vectors.append(p)
         return vectors
-=======
-    vectors = []
-    for i in range(length):
-        p = Point(random.randint(-1, 1), random.randint(-1, 1))
-        while p.x == 0 and p.y == 0:
-            p = Point(random.randint(-1, 1), random.randint(-1, 1))
-        vectors.append(p)
-    return vectors
->>>>>>> 6263caf39be8fd83d921caecbcafc68d0fb5ddd2
 
 # новые координаты точки после прибавления к ней вектора    
 def move(movingPoints: list, vectors: list, i):
