@@ -182,11 +182,11 @@ def angleOctanTest(point, points):
         deltaI = oct(point, newPoints[i])
         deltaIplus1 = oct(point, newPoints[i + 1])
         dif = deltaIplus1 - deltaI
-        print(dif)
         if (dif > 4):
             dif = dif - 8
         if (dif < -4):
             dif = dif + 8
+        #шаг коррекции
         if (dif == 4 or dif == -4):
             d = (newPoints[i].x - point.x) * (newPoints[i + 1].y - point.y) - (newPoints[i + 1].x - point.x) * (newPoints[i].y - point.y)
             if d > 0:
