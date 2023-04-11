@@ -27,7 +27,7 @@ def isPointInside(points, p0):
   points.append(Point(points[0].x, points[0].y))
   for i in range(len(points) - 1):
     if(doIntersect(p0, q, points[i], points[i + 1])):
-      if(not (doLieOnSegment(p0, q, points[i + 1])) and (doLieOnSegment(p0, q, points[i]))):
+      if(not (doLieOnSegment(p0, q, points[i + 1])) and (doLieOnSegment(p0, q, points[i])) and not(checkVertices(points[i - 1], points[i], points[(i + 1) % len(points)]))):
         count += 1
       else:
         if(doLieOnSegment(p0, q, points[i])):
@@ -61,6 +61,12 @@ def isPointInside(points, p0):
   points.pop()
 
   return count % 2 == 1
+
+def checkVertices(point1, point2, point3, ymax):
+  newPoint = Point(point1.x, ymax + 1)
+  if (checkPointOnTheLine(point1, point2, newPoint)['title'] == checkPointOnTheLine(point3, point2, newPoint)['title']):
+    return True
+  return False
 
 if __name__ == "__main__":
   points = [Point(random.randint(1, 11), random.randint(1, 11)) for p in range(0, 6)]
