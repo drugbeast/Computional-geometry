@@ -1,1 +1,1 @@
-# Computional-geometry
+# computional-geometry
